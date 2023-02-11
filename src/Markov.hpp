@@ -66,12 +66,6 @@ namespace MC {
 					variants.push_back(Probability[i][1]);
 				}
 			}
-			//
-			for (auto it = variants.begin(); it != variants.end(); ++it) {
-				std::cout << *it << "\t";
-			}
-			std::cout << std::endl;
-			//
 			output += " " + current;
 			size_counter++;
 			current = variants[rand() % variants.size()];
