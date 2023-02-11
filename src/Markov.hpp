@@ -9,28 +9,53 @@ namespace MC {
 	std::vector< std::string >		 Words;
 	std::vector < std::vector<std::string> > Probability;
 
-	void ReadSource(const std::string& file_path) {
+	void ReadSourceCOMBS(const std::string& file_path) {
 		std::ifstream sourceFile; // "source.txt"
 		sourceFile.open(file_path);
 	
+		int count = 0;
 		std::string line;
 		while (std::getline(sourceFile, line)) {
 			//std::cout << "[MC] - LINE: " << line << std::endl;
 
 			std::string word;
-			int count = 0;
+			//int count = 0;
 			for (std::string::iterator it = line.begin(); it != line.end(); ++it) {
-				if (*it == ' ' || it == --line.end()) {
-					Words.push_back(word);
-					word = "";
+				if (*it == ' ') {
 					count++;
 				}
+				if ((*it == ' ' && count % 2 == 0) || it == --line.end() ) {
+					Words.push_back(word);
+					word = "";
+					//count++;
+				}
 				else {
-					word += *it;
+					word += tolower(*it);
 				}
 			}
 		}
 	}
+	void ReadSource(const std::string& file_path) {
+		std::ifstream sourceFile; // "source.txt"
+		sourceFile.open(file_path);
+
+		std::string line;
+		while (std::getline(sourceFile, line)) {
+			//std::cout << "[MC] - LINE: " << line << std::endl;
+
+			std::string word;
+			for (std::string::iterator it = line.begin(); it != line.end(); ++it) {
+				if (*it == ' ' || it == --line.end()) {
+					Words.push_back(word);
+					word = "";
+				}
+				else {
+					word += tolower(*it);
+				}
+			}
+		}
+	}
+
 	void ReadSource(const std::string& file_path, char delim) {
 		std::ifstream sourceFile;
 		sourceFile.open(file_path);
@@ -69,8 +94,7 @@ namespace MC {
 			output += " " + current;
 			size_counter++;
 			current = variants[rand() % variants.size()];
-			variants.clear(); //TEST
+			variants.clear();
 		}
-
 	}
 }
