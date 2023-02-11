@@ -30,7 +30,7 @@ int main() {
 	while (getchar()) {
 		std::string output;
 
-		MC::Generate(output, 100);
+		MC::Generate(output, 10);
 
 		cout << "> " << output << endl;
 	}
