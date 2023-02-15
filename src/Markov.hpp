@@ -1,5 +1,7 @@
 #pragma once
 
+#include "utf8cpp/utf8.h"
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -9,6 +11,13 @@
 namespace MC {
 	std::vector< std::string >		 Words;
 	std::vector < std::vector<std::string> > Probability;
+
+	// Fixing string encoding
+	void FixUTF(std::string& str) {
+		std::string temp;
+		utf8::replace_invalid(begin(str), end(str), back_inserter(temp));
+		str = temp;
+	}
 
 	// Reading the source file by phrases
 	void ReadSourceBP(const std::string& file_path) {
@@ -58,7 +67,7 @@ namespace MC {
 					word = "";
 				}
 				else {
-					word += tolower(*it);
+					word += tolower(*it); // UTF-8 TROUBLE
 				}
 			}
 			Words.push_back(word);
